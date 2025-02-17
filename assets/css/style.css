@@ -9,14 +9,15 @@
 
 :root {
     --main-background-color: #a3a3a370;
-    --item-background-color: #a3a3a3af;
+    --item-background-color: #cacaca;
     --works-background-color: #ffffff0e;
     --about-background-color: #000000c7;
+    --dark-color: #000;
     --text-color: #333;
     --other-color: #dddddd;
     --split-color: #d7dbd8;
     --accent-color: #e95d32;
-    --accent-color-gray: #dddddd86;
+    --accent-color-gray: #9c9c9c86;
     --thin-font: "AktivGrotesk", "Sawarabi Gothic", sans-serif;
     --regular-font: YakuHanJP, "Sawarabi Gothic", sans-serif;
     --mincho-font: "Shippori Mincho", serif;
@@ -73,6 +74,7 @@ body {
     height: calc(100dvh - var(--combined-margin));
     margin: 15px 15px 0px 15px;
     overflow: auto;
+    border: var(--text-color) 1px solid;
 
 }
 
@@ -86,12 +88,7 @@ body {
     color: var(--accent-color);
 }
 
-@media (max-width: 535px) {
 
-    .container {
-        margin-bottom: 2px;
-    }
-}
 
 
 .right-content {
@@ -106,10 +103,12 @@ body {
     -ms-writing-mode: tb-rl;
     writing-mode: vertical-rl;
     font-size: 2rem;
-    color: #000;
-    background-color: var(--accent-color-gray);
+    color: var(--dark-color);
+    background-color: var(--item-background-color);
     background-position: center;
     background-size: cover;
+    border: 1px solid var(--text-color);
+    border-left: none;
     z-index: 10;
 }
 
@@ -154,7 +153,7 @@ body {
     width: 300px;
     height: calc(100dvh - var(--combined-margin));
     overflow: hidden;
-    color: #0f0f0f;
+    color: var(--dark-color);
     z-index: 10;
 
 }
@@ -168,12 +167,19 @@ body {
     width: 100%;
     align-items: center;
     justify-content: center;
+
 }
 
-.left-top__box {
+.left-top__box,
+.left-center__info,
+.left-bottom__list li {
+    background-color: var(--item-background-color);
+}
+
+.left-top__box,
+.left-center__info {
     height: 100%;
     width: 258px;
-    background-color: var(--item-background-color);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -190,15 +196,6 @@ body {
     justify-content: center;
 }
 
-.left-center__info {
-    height: 100%;
-    width: 258px;
-    background-color: var(--item-background-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
 
 
 .left-bottom {
@@ -228,7 +225,6 @@ body {
 .left-bottom__list li {
     width: 51px;
     height: 100%;
-    background-color: var(--item-background-color);
     -webkit-writing-mode: vertical-rl;
     -ms-writing-mode: tb-rl;
     writing-mode: vertical-rl;
@@ -346,7 +342,8 @@ body {
 
 .header__view-site {
     z-index: 999;
-    color: var(--split-color);
+    /* color: var(--split-color); */
+    color: var(--text-color);
     font-size: 1.4rem;
     font-family: var(--point-font);
     font-weight: 300;
@@ -373,7 +370,7 @@ body {
 .header-hamburger__line {
     width: 100%;
     height: 1px;
-    background-color: #ffffff;
+    background-color: #fff;
     transition: transform 0.7s cubic-bezier(.41, .21, .15, 1.04);
 }
 
@@ -539,7 +536,6 @@ body {
     overflow-y: auto;
     position: relative;
     width: calc(100vw - 410px);
-
     display: flex;
     justify-content: center;
 }
@@ -848,19 +844,19 @@ svg {
 }
 
 .main-content__title {
+    color: #292929;
     font-family: var(--mincho-font);
-    font-size: clamp(2.3rem, calc(1.5rem + 6vmin), 6rem);
+    font-size: clamp(2rem, -1.184rem + 15.07vw, 12rem);
     margin-right: 20px;
     -ms-writing-mode: tb-rl;
     -webkit-writing-mode: vertical-rl;
     writing-mode: vertical-rl;
-    height: 80dvh;
     margin-top: 70px;
 }
 
 
 .main-set__fixed-blur-box {
-    margin: 0 auto 0 20%;
+    margin: 0 auto 0 10%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -942,7 +938,7 @@ svg {
     flex-direction: column;
     justify-content: center;
     margin-left: 40px;
-    max-width: 70%;
+    max-width: 60%;
 }
 
 
@@ -977,7 +973,7 @@ svg {
     }
 
     50% {
-        color: #000000;
+        color: var(--dark-color);
     }
 
     100% {
@@ -991,7 +987,7 @@ svg {
     }
 
     50% {
-        color: #000000;
+        color: var(--dark-color);
     }
 
     100% {
@@ -999,32 +995,54 @@ svg {
     }
 }
 
-@media (max-width: 768px) {
-    .char {
-        -webkit-animation-duration: 0.03s;
-        animation-duration: 0.03s;
+@keyframes slideColor-dark {
+    0% {
+        color: var(--text-color);
+    }
 
+    50% {
+        color: var(--split-color);
+    }
+
+    100% {
+        color: var(--text-color);
     }
 }
 
+@-webkit-keyframes slideColor-dark {
+    0% {
+        color: var(--text-color);
+    }
+
+    50% {
+        color: var(--split-color);
+    }
+
+    100% {
+        color: var(--text-color);
+    }
+}
+
+
 #contact {
-    position: relative;
-    background-color: var(--item-background-color);
+    display: flex;
+    flex-direction: row-reverse;
     height: calc(100dvh - var(--combined-margin));
 }
 
 
 .contact__body {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: relative;
+    margin-inline: auto;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
+    margin-left: 40px;
+    max-width: 70%;
 }
 
 .contact__box {
+    position: absolute;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1045,7 +1063,8 @@ svg {
 }
 
 .contact__a a {
-    font-size: clamp(1.5rem, calc(0.449rem + 4.2vw), 3.6rem);
+    /* font-size: clamp(1.5rem, calc(0.449rem + 4.2vw), 3.6rem); */
+    font-size: clamp(2.8rem, -3.2rem + 8vw, 3.8rem);
 }
 
 .contact__X {
@@ -1069,13 +1088,22 @@ svg {
 }
 
 @media (max-width: 1100px) {
-    .about__body {
+
+    .about__body,
+    .contact__body {
         margin-left: 30px;
+    }
+
+    .contact__a a {
+        /* font-size: clamp(1.5rem, calc(0.449rem + 4.2vw), 3.6rem); */
+        font-size: clamp(1.8rem, 0.786rem + 4.38vw, 3.8rem);
     }
 }
 
 @media (max-width: 768px) {
-    .about__body {
+
+    .about__body,
+    .contact__body {
         margin-left: 20px;
     }
 
@@ -1093,7 +1121,9 @@ svg {
 }
 
 @media (max-width: 535px) {
-    .about__body {
+
+    .about__body,
+    .contact__body {
         margin-left: 10px;
     }
 
@@ -1141,12 +1171,16 @@ svg {
 
 .about-wrapper__title {
     padding: 20px;
-    color: var(--other-color);
+    color: var(--text-color);
     font-size: 3rem;
     text-align: center;
     margin-top: 150px;
     margin-bottom: 150px;
     font-family: var(--thin-font);
+}
+
+.titleColor {
+    color: var(--other-color);
 }
 
 .profile__box-myname {

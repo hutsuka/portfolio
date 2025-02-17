@@ -1,7 +1,40 @@
 gsap.registerPlugin(ScrollTrigger);
 
 
-const size = 28;
+// const size = 28;
+
+// function setup() {
+//   const mosCanvas = document.querySelector('#mos-canvas');
+//   const canvas = createCanvas(mosCanvas.offsetWidth, mosCanvas.offsetHeight - 1);
+//   canvas.parent(mosCanvas);
+//   noStroke();
+// }
+
+// function draw() {
+//   const xn = ceil(width / size);
+//   const yn = ceil(height / size);
+//   background(200);
+
+//   for (let y = 0; y < yn; y++) {
+//     for (let x = 0; x < xn; x++) {
+//       const v = noise(x / 40, y / 40, frameCount / 400);
+//       const brightness = map(v, 0, 1, 220, 40);
+//       const alphaValue = map(v, 0, 1, 50, 200);
+//       fill(brightness, alphaValue);
+//       rect(x * size, y * size, size, size);
+//     }
+//   }
+// }
+
+
+
+// function windowResized() {
+//   const mosCanvas = document.querySelector('#mos-canvas');
+//   resizeCanvas(mosCanvas.offsetWidth, mosCanvas.offsetHeight);
+// }
+
+
+const size = 30;
 
 function setup() {
   const mosCanvas = document.querySelector('#mos-canvas');
@@ -9,38 +42,41 @@ function setup() {
   canvas.parent(mosCanvas);
   noStroke();
 }
-
 function draw() {
   const xn = ceil(width / size);
   const yn = ceil(height / size);
-  background(200);
+  background(255);
 
   for (let y = 0; y < yn; y++) {
     for (let x = 0; x < xn; x++) {
-      const v = noise(x / 40, y / 40, frameCount / 400);
-      const brightness = map(v, 0, 1, 220, 40);
-      const alphaValue = map(v, 0, 1, 50, 200);
-      fill(brightness, alphaValue);
+      // ノイズを生成し、色を計算
+      const v = noise(x / 20, y / 20, frameCount / 200); // スケールを変更
+      const colorValue = v * 125 + 130; // 200〜255の範囲にする
+      // const colorValue = v * 5 + 10;
+      // 隣接する色のための補間
+      const nextX = (x + 1) % xn; // 次のx座標
+      const nextY = (y + 1) % yn; // 次のy座標
+      const nextColorValue = noise(nextX / 20, nextY / 20, frameCount / 200) * 55 + 200;
+
+      // 現在の色と次の色を補間
+      const c = lerpColor(color(colorValue), color(nextColorValue), 0.5);
+
+      fill(c);
       rect(x * size, y * size, size, size);
     }
   }
 }
-
-
-
+// リサイズ設定
 function windowResized() {
-  const mosCanvas = document.querySelector('#mos-canvas');
-  resizeCanvas(mosCanvas.offsetWidth, mosCanvas.offsetHeight);
+  const canvasContainer = document.querySelector('.container');
+  resizeCanvas(canvasContainer.offsetWidth, canvasContainer.offsetHeight);
 }
-
-
-
 
 document.addEventListener("DOMContentLoaded", () => {
 
 
-
   const split = document.querySelectorAll('.split');
+
   function isHoverable() {
       return window.matchMedia('(hover: hover)').matches;
   }
@@ -61,9 +97,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
           const chars = this.querySelectorAll('.char');
           const delay = 70;
+
+          const animationType = this.dataset.animation || 'slideColor';
+
           chars.forEach((char, index) => {
               setTimeout(() => {
-                  char.style.animation = 'slideColor 0.1s forwards';
+                  char.style.animation = `${animationType} 0.1s forwards`;
               }, index * delay);
           });
       });
